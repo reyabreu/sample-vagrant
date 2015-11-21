@@ -1,0 +1,78 @@
+import com.bmuschko.gradle.vagrant.tasks.Vagrant;
+
+buildscript {
+  ext { springBootVersion = '1.3.0.RELEASE' }
+
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
+
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath 'com.bmuschko:gradle-vagrant-plugin:2.0'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'com.bmuschko.vagrant'
+
+vagrant { installation { validate = false
+  } }
+
+version = '1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+springBoot {
+  classifier = 'boot'
+  mainClass = 'com.paysafe.parrot.ParrotStartBootRouter'
+}
+
+
+jar {
+  baseName = 'spring-hello-docker'
+  version = '0.0.1-SNAPSHOT'
+  manifest {
+    attributes 'Implementation-Title': 'Gradle Quickstart','Implementation-Version': version
+    attributes 'Main-Class':'com.paysafe.parrot.ParrotStartBootRouter'
+  }
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+  compile('org.springframework.boot:spring-boot-starter-web')
+  compile('org.springframework.boot:spring-boot-starter-logging')
+  compile('org.apache.camel:camel-core:2.16.0')
+  compile('org.apache.camel:camel-spring-boot:2.16.0')
+  compile('org.apache.camel:camel-spring-javaconfig:2.16.0')
+  compile('org.mongodb:mongo-java-driver:3.1.1')
+
+  compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+
+  testCompile('org.apache.camel:camel-test-spring:2.16.0')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+  testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+
+eclipse {
+  classpath {
+    containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+    containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+  }
+}
+
+test { systemProperties 'property': 'value' }
+
+uploadArchives {
+  repositories { flatDir { dirs 'repos'
+    } }
+}
+
+task wrapper(type: Wrapper) { gradleVersion = '2.7' }
+
