@@ -2,8 +2,8 @@ logging:
   level:
     org.springframework.web: warn
     org.apache.camel: info
-    com.paysafe: debug
+    com.reyabreu: debug
 spring:
   main:
-    sources: com.paysafe.parrot.ParrotStartBootRouter
+    sources: org.reyabreu.sample.SampleStartBootRouter
 

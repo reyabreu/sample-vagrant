@@ -1,4 +1,4 @@
-package com.paysafe.parrot;
+package org.reyabreu.sample;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
@@ -17,10 +17,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(CamelSpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ParrotStartBootRouterTests.ContextConfig.class,
+@ContextConfiguration(classes = SampleStartBootRouterTests.ContextConfig.class,
     loader = CamelSpringDelegatingTestContextLoader.class)
 @MockEndpoints
-public class ParrotStartBootRouterTests {
+public class SampleStartBootRouterTests {
 
   @EndpointInject(uri = "mock:result")
   protected MockEndpoint resultEndpoint;

@@ -1,4 +1,4 @@
-package com.paysafe.parrot;
+package org.reyabreu.sample;
 
 import org.apache.camel.spring.boot.FatJarRouter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
  *
  */
 @SpringBootApplication
-public class ParrotStartBootRouter extends FatJarRouter {
+public class SampleStartBootRouter extends FatJarRouter {
 
   @Override
   public void configure() throws Exception {

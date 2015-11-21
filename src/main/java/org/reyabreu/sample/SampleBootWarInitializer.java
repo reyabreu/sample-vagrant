@@ -1,13 +1,13 @@
-package com.paysafe.parrot;
+package org.reyabreu.sample;
 
 import org.apache.camel.spring.boot.FatJarRouter;
 import org.apache.camel.spring.boot.FatWarInitializer;
 
-public class ParrotBootWarInitializer extends FatWarInitializer {
+public class SampleBootWarInitializer extends FatWarInitializer {
 
   @Override
   protected Class<? extends FatJarRouter> routerClass() {
-    return ParrotStartBootRouter.class;
+    return SampleStartBootRouter.class;
   }
   
 }
