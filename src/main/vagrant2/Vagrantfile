@@ -1,13 +1,8 @@
 ﻿# -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-unless Vagrant.has_plugin?("vagrant-docker-compose") &&  Vagrant.has_plugin?("vagrant-reload")
-  unless Vagrant.has_plugin?("vagrant-docker-compose")
-    system("vagrant plugin install vagrant-docker-compose")
-  end
-  unless Vagrant.has_plugin?("vagrant-reload")
-    system("vagrant plugin install vagrant-reload")
-  end
+unless Vagrant.has_plugin?("vagrant-docker-compose")
+  system("vagrant plugin install vagrant-docker-compose")
   puts "dependencies installed, please try the command again."
   exit
 end
@@ -18,7 +13,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "default"
+  config.vm.box = "reynaldo"
   
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -47,16 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   
   # Bootstrap with shell to install Docker
-  config.vm.provision :shell, path: "script/bootstrap1.sh", :privileged => true
-  config.vm.provision :reload
-  config.vm.provision :shell, path: "script/bootstrap2.sh", :privileged => true
-  
-  # Build Docker containers
-  config.vm.provision :shell, path: "script/docker_build.sh", :privileged => true
-  
-  # # Start containers
-  # config.vm.provision :shell, path: "script/docker_start.sh", :privileged => true
-  
-  # # Seed the App
-  # config.vm.provision :shell, path: "script/app.sh", :privileged => true
+  config.vm.provision :shell, path: "script/bootstrap.sh", :privileged => true
+  config.vm.provision :docker
+  config.vm.provision :docker_compose, yml: "/vagrant/docker-compose.yml", rebuild: true, project_name: "dev environment", run: "always"
 end

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 
 #========
 # START
@@ -44,10 +44,29 @@ echo
 
 groupadd docker
 gpasswd -a ${USER} docker
+gpasswd -a vagrant docker
 service docker restart
 
 echo
-echo "[fin] Bootstrap done."
+echo "[status] download docker-compose from GitHub"
+echo
+
+curl -L https://github.com/docker/compose/releases/download/1.5.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+
+echo
+echo "[status] Make docker-compose binary executable"
+echo
+
+chmod +x /usr/local/bin/docker-compose
+
+echo
+echo "[status] verify docker-compose installation"
+echo
+
+docker-compose --version
+
+echo
+echo "[fin] Bootstrap finished succesfully."
 echo
 
 # END

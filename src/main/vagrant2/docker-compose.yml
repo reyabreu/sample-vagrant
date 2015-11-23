@@ -1,0 +1,22 @@
+﻿ubuntu:
+  build: docker/ubuntu
+mongodb:
+  build: docker/mongo
+  ports:
+    - "27017:27017"
+    - "27018:27018"
+  volumes:
+    - ./data/db:/data/db
+rabbitmq:
+  image: rabbitmq:3-management
+  ports:
+    - "5671:5671"
+    - "5672:5672"
+    - "55672:55672"
+    - "15672:15672"
+    - "15674:15674"
+    - "61613:61613"
+  hostname: docker-rabbitmq
+  environment:
+    - RABBITMQ_USER=guest
+    - RABBITMQ_PASS=guest
